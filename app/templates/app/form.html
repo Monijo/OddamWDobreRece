@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block headerClass %}"header--form-page"{% endblock %}
 
-{% block content %}
-{%  block header %}
-      <div class="slogan container container--90">
+{% block navActions %}
+    <li class="logged-user">
+            Witaj Agata
+            <ul class="dropdown">
+              <li><a href="#">Profil</a></li>
+              <li><a href="#">Ustawienia</a></li>
+              <li><a href="#">Wyloguj</a></li>
+            </ul>
+          </li>
+{% endblock %}
+{% block headerDown %}
+    <div class="slogan container container--90">
         <div class="slogan--item">
           <h1>
             Oddaj rzeczy, których już nie chcesz<br />
@@ -30,8 +40,12 @@
           </div>
         </div>
       </div>
-    {% endblock %}
 
+{%  endblock %}
+
+
+
+{% block content %}
     <section class="form--steps">
       <div class="form--steps-instructions">
         <div class="form--steps-container">
