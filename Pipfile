@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 django = "==3.2.13"
+django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
 
 [dev-packages]
 

@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
 
 from config import settings
 from .managers import CustomUserManager
@@ -46,8 +47,8 @@ class Institution(models.Model):
 
 class Donation(models.Model):
     quantity = models.IntegerField()
-    phoneNumberRegex = RegexValidator(regex=r'\d{9}$')
-    phoneNumber = models.IntegerField(validators=[phoneNumberRegex], max_length=16, unique=True)
+
+    phoneNumber = PhoneNumberField(unique=True, null=False, blank=False)
     address = models.CharField(max_length=250)
     city = models.CharField(max_length=250)
     zip_code = models.CharField(max_length=6)
@@ -58,7 +59,7 @@ class Donation(models.Model):
 
     categories = models.ManyToManyField(Category, related_name="categories")
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, related_name="institution")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name="user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name="user", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.pick_up_date
