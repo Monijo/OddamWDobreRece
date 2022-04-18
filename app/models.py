@@ -55,13 +55,13 @@ class Donation(models.Model):
 
     pick_up_date = models.DateField()
     pick_up_time = models.TimeField()
-    pick_up_comment = models.TextField()
+    pick_up_comment = models.TextField(blank=True)
 
     categories = models.ManyToManyField(Category, related_name="categories")
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, related_name="institution")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name="user", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.pick_up_date
+        return f"{self.pick_up_date}"
 
 
