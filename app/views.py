@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 
-from app.models import Donation
+from app.models import Donation, Institution
 
 
 class LandingPage(View):
@@ -15,7 +15,19 @@ class LandingPage(View):
                 supported_institutions.append(donation.institution)
         institution_numb = len(supported_institutions)
 
-        return render(request, "app/index.html", {"bugs_num": bugs_num, "institution_numb": institution_numb})
+        all_foundations = Institution.objects.filter(type="foundation")
+        all_order_organizations = Institution.objects.filter(type="order_organization")
+        all_local_collections = Institution.objects.filter(type="local_collection")
+
+        context = {
+            "bugs_num": bugs_num,
+            "institution_numb": institution_numb,
+            "all_foundations": all_foundations,
+            "all_order_organizations": all_order_organizations,
+            "all_local_collection": all_local_collections
+        }
+
+        return render(request, "app/index.html", context)
 
 
 
