@@ -2,13 +2,12 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import forms, PasswordInput, TextInput
 
 from .models import CustomUser
-
+from django.contrib.auth import get_user_model
 
 class CustomUserCreationForm(UserCreationForm):
 
-
     class Meta:
-        model = CustomUser
+        model = get_user_model()
         fields = ('email',)
 
         widgets = {

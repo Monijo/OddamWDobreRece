@@ -1,8 +1,9 @@
 from django.contrib.auth.base_user import BaseUserManager
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserManager(BaseUserManager):
+    use_in_migrations = True
     """
     Custom user model manager where email is the unique identifiers
     for authentication instead of usernames.
@@ -11,12 +12,14 @@ class CustomUserManager(BaseUserManager):
         """
         Create and save a User with the given email and password.
         """
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
         if not email:
             raise ValueError(_('The Email must be set'))
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password, **extra_fields):

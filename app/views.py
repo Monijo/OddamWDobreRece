@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.views import View
 
@@ -52,4 +53,8 @@ class Register(View):
         form = CustomUserCreationForm(request.POST)
 
         if form.is_valid():
-            return redirect('pinBoard:sign_in')
+            user_reg = form.save(commit=False)
+            user_reg.save()
+            login(request, user_reg)
+            return redirect('app:loginPage')
+        return render(request, "app/register.html", {"form": form})
