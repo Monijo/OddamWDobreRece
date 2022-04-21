@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
@@ -71,3 +71,11 @@ class Register(View):
             login(request, user_reg)
             return redirect('app:loginPage')
         return render(request, "app/register.html", {"form": form})
+
+
+class Logout(View):
+
+    def get(self, request):
+        logout(request)
+        return redirect("app:landingPage")
+
