@@ -1,9 +1,10 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 
-from app.forms import CustomUserCreationForm
-from app.models import Donation, Institution
+from app.forms import CustomUserCreationForm, CustomUserChangeForm, UserLogInForm
+from app.models import Donation, Institution, CustomUser
 
 
 class LandingPage(View):
@@ -32,7 +33,6 @@ class LandingPage(View):
         return render(request, "app/index.html", context)
 
 
-
 class AddDonation(View):
     def get(self, request):
         return render(request, "app/form.html")
@@ -40,7 +40,20 @@ class AddDonation(View):
 
 class Login(View):
     def get(self, request):
-        return render(request, "app/login.html")
+        form = UserLogInForm()
+        return render(request, "app/login.html", {'form': form})
+
+    def post(self, request):
+        email = request.POST.get("email")
+        user = authenticate(email=email, password=request.POST.get("password"))
+        if user is not None:
+            login(request, user)
+            return redirect("app:landingPage")
+        if not CustomUser.objects.filter(email=email):
+            return redirect("app:registerPage")
+        else:
+            form = UserLogInForm()
+            return render(request, "app/login.html", {'form': form})
 
 
 class Register(View):

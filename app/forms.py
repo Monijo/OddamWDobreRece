@@ -1,8 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.forms import forms, PasswordInput, TextInput
+from django.forms import forms, PasswordInput, TextInput, ModelForm
 
 from .models import CustomUser
 from django.contrib.auth import get_user_model
+
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -24,23 +25,36 @@ class CustomUserCreationForm(UserCreationForm):
 
         }
 
-    # def clean(self):
-    #     cleaned_data = super(CustomUserCreationForm, self).clean()
-    #     password1 = cleaned_data.get("password")
-    #     password2 = cleaned_data.get("confirm_password")
-    #
-    #     if password1 != password2:
-    #         raise forms.ValidationError(
-    #             "password and confirm_password does not match"
-    #         )
-
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
-        model = CustomUser
+        model = get_user_model()
         fields = ('email',)
 
+    widgets = {
 
+        'email': TextInput(attrs={'placeholder': 'Email'}),
+        'password': PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Hasło'
+        })
+
+    }
+
+class UserLogInForm(ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'password')
+
+        widgets = {
+
+            'email': TextInput(attrs={'placeholder': 'email'}),
+            'password': PasswordInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Hasło'
+            })
+
+        }
 
 
