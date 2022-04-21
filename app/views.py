@@ -37,10 +37,11 @@ class LandingPage(View):
 
 class AddDonation(LoginRequiredMixin, View):
     login_url = '/signIn/'
-    # redirect_field_name = 'redirect_to'
+
     def get(self, request):
         all_categories = Category.objects.all()
-        return render(request, "app/form.html", {"categories": all_categories})
+        all_institutions = Institution.objects.all()
+        return render(request, "app/form.html", {"categories": all_categories, "institutions": all_institutions})
 
 
 class Login(View):
