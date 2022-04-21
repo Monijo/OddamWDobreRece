@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import View
 
 from app.forms import CustomUserCreationForm, CustomUserChangeForm, UserLogInForm
@@ -36,7 +37,7 @@ class LandingPage(View):
 
 
 class AddDonation(LoginRequiredMixin, View):
-    login_url = '/signIn/'
+    login_url = reverse_lazy("app:loginPage")
 
     def get(self, request):
         all_categories = Category.objects.all()
