@@ -1,10 +1,12 @@
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 
 from app.forms import CustomUserCreationForm, CustomUserChangeForm, UserLogInForm
-from app.models import Donation, Institution, CustomUser
+from app.models import Donation, Institution, CustomUser, Category
 
 
 class LandingPage(View):
@@ -33,9 +35,12 @@ class LandingPage(View):
         return render(request, "app/index.html", context)
 
 
-class AddDonation(View):
+class AddDonation(LoginRequiredMixin, View):
+    login_url = '/signIn/'
+    # redirect_field_name = 'redirect_to'
     def get(self, request):
-        return render(request, "app/form.html")
+        all_categories = Category.objects.all()
+        return render(request, "app/form.html", {"categories": all_categories})
 
 
 class Login(View):
