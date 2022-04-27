@@ -236,11 +236,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // TODO: get data from inputs and show them in summary
 
-      $("#btnForm").click(function(){
+      $("#btnForm").click(function(e){
+        e.preventDefault()
         // const data =new FormData(document.querySelector('#myForm'))
-        const categorie = $('#categorie').val()
+        const categories=[];
+         $('input[id="categorie"]').each(function(){
+          if($(this).is(":checked")){
+            categories.push($(this).attr('name'))
+          }
+        })
+        const institution=[];
+         $('input[id="institution"]:checked').each(function(){
+          if($(this).prop("checked")){
+            institution.push($(this).attr('name'))
+          }
+        })
+
         const bags = $('#bags').val()
-        const institution = $('#institution').val()
         const address = $('#address').val()
         const city = $('#city').val()
         const postcode = $('#postcode').val()
@@ -249,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const time = $('#time').val()
         const comments = $('#comments').val()
         $('#summaryBugs').text(bags)
-        $('#categorieSummary').text(categorie)
+        $('#categorieSummary').text(categories)
         $('#summaryFundation').text(institution)
         $('#summaryAddress').text(address)
         $('#summaryCity').text(city)
@@ -258,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#summaryDate').text(date)
         $('#summaryTime').text(time)
         $('#summaryComments').text(comments)
-        console.log("kategoria: " + categorie, "fundacja: " + institution)
+        console.log("kategoria: " + categories, "fundacja: " + institution)
 });
 
     }

@@ -75,7 +75,7 @@
                 <input
                         id="categorie"
                   type="checkbox"
-                  name="categories"
+                  name={{ category.name }}
                   value={{ category.id }}
 
                 />
@@ -121,7 +121,7 @@
 
             <div class="form-group form-group--checkbox">
               <label>
-                <input id="institution" type="radio" name="organization" value={{ institution.pk }} />
+                <input id="institution" type="radio" name={{ institution.name }} value={{ institution.pk }} />
                 <span class="checkbox radio"></span>
                 <span class="description">
                   <div class="title">{{ institution.name }}</div>
