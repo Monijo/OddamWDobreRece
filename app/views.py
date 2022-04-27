@@ -45,6 +45,13 @@ class AddDonation(LoginRequiredMixin, View):
         return render(request, "app/form.html", {"categories": all_categories, "institutions": all_institutions})
 
 
+class Confirmation(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, "app/form-confirmation.html")
+    def post(self,request):
+        print()
+
+
 class Login(View):
     def get(self, request):
         form = UserLogInForm()

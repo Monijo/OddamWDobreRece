@@ -246,8 +246,19 @@ document.addEventListener("DOMContentLoaded", function() {
       e.preventDefault();
       this.currentStep++;
       this.updateForm();
+
+    console.log("Klikniete1")
+       const data =new FormData(document.querySelector('#myForm'));
+      $.post("/confirmation/", data, function(data, status){
+    alert("Data: " + data + "    Status: " + status);
+  })
+
+
     }
   }
+
+
+
   const form = document.querySelector(".form--steps");
   if (form !== null) {
     new FormSteps(form);
