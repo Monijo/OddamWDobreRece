@@ -235,6 +235,32 @@ document.addEventListener("DOMContentLoaded", function() {
       this.$step.parentElement.hidden = this.currentStep >= 6;
 
       // TODO: get data from inputs and show them in summary
+
+      $("#btnForm").click(function(){
+        // const data =new FormData(document.querySelector('#myForm'))
+        const categorie = $('#categorie').val()
+        const bags = $('#bags').val()
+        const institution = $('#institution').val()
+        const address = $('#address').val()
+        const city = $('#city').val()
+        const postcode = $('#postcode').val()
+        const phone = $('#phone').val()
+        const date = $('#date').val()
+        const time = $('#time').val()
+        const comments = $('#comments').val()
+        $('#summaryBugs').text(bags)
+        $('#categorieSummary').text(categorie)
+        $('#summaryFundation').text(institution)
+        $('#summaryAddress').text(address)
+        $('#summaryCity').text(city)
+        $('#summaryPostcode').text(postcode)
+        $('#summaryPhone').text(phone)
+        $('#summaryDate').text(date)
+        $('#summaryTime').text(time)
+        $('#summaryComments').text(comments)
+        console.log("kategoria: " + categorie, "fundacja: " + institution)
+});
+
     }
 
     /**
