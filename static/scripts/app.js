@@ -236,42 +236,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // TODO: get data from inputs and show them in summary
 
-      $("#btnForm").click(function(e){
-        e.preventDefault()
-        // const data =new FormData(document.querySelector('#myForm'))
-        const categories=[];
-         $('input[id="categorie"]').each(function(){
-          if($(this).is(":checked")){
-            categories.push($(this).attr('name'))
-          }
-        })
-        const institution=[];
-         $('input[id="institution"]:checked').each(function(){
-          if($(this).prop("checked")){
-            institution.push($(this).attr('name'))
-          }
-        })
+        const data =new FormData(document.querySelector('#myForm'))
+        const city = data.get("city")
+      const address = data.get("address")
+      const postcode = data.get("postcode")
+      const date = data.get("data")
+      const time = data.get("time")
+      const phone = data.get("phone")
+      const bags = data.get("bags")
 
-        const bags = $('#bags').val()
-        const address = $('#address').val()
-        const city = $('#city').val()
-        const postcode = $('#postcode').val()
-        const phone = $('#phone').val()
-        const date = $('#date').val()
-        const time = $('#time').val()
-        const comments = $('#comments').val()
-        $('#summaryBugs').text(bags)
-        $('#categorieSummary').text(categories)
-        $('#summaryFundation').text(institution)
-        $('#summaryAddress').text(address)
-        $('#summaryCity').text(city)
-        $('#summaryPostcode').text(postcode)
-        $('#summaryPhone').text(phone)
-        $('#summaryDate').text(date)
-        $('#summaryTime').text(time)
-        $('#summaryComments').text(comments)
-        console.log("kategoria: " + categories, "fundacja: " + institution)
-});
+
+        const summaryBugs = document.getElementById("summaryBugs")
+      summaryBugs.innerText = bags >1? bags>1  && bags<4 ?`${bags} worki`: `${bags} worków` : `${bags} worek`
 
     }
 
@@ -285,11 +261,7 @@ document.addEventListener("DOMContentLoaded", function() {
       this.currentStep++;
       this.updateForm();
 
-    console.log("Klikniete1")
-       const data =new FormData(document.querySelector('#myForm'));
-      $.post("/confirmation/", data, function(data, status){
-    alert("Data: " + data + "    Status: " + status);
-  })
+
 
 
     }
